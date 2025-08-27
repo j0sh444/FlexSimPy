@@ -44,6 +44,7 @@ struct Controller {
     PyObject* getPerformanceMeasure(PyObject* args);
     PyObject* time(PyObject* args);
     PyObject* evaluate(PyObject* args);
+    PyObject* executeString(PyObject* args);
     PyObject* send(PyObject* args);
     PyObject* receive(PyObject* args);
 
@@ -87,6 +88,8 @@ struct Controller {
         { return self->callMethod(args, [self](PyObject* args) -> PyObject* {return self->time(args); }); }
     static PyObject* s_evaluate(Controller* self, PyObject* args) 
         { return self->callMethod(args, [self](PyObject* args) -> PyObject* {return self->evaluate(args); }); }
+    static PyObject* s_executeString(Controller* self, PyObject* args)
+        { return self->callMethod(args, [self](PyObject* args) -> PyObject* {return self->executeString(args); }); }
     static PyObject* s_send(Controller* self, PyObject* args)
         { return self->send(args); }
     static PyObject* s_receive(Controller* self, PyObject* args)

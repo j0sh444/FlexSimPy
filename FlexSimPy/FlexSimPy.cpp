@@ -35,6 +35,7 @@ PyMethodDef Controller::methods[] = {
     {"getPerformanceMeasure",  (PyCFunction)s_getPerformanceMeasure, METH_VARARGS, "Get a model performance measure value."},
     {"time",  (PyCFunction)s_time, METH_VARARGS, "Get the model time."},
     {"evaluate",  (PyCFunction)s_evaluate, METH_VARARGS, "Evaluate a FlexScript node addressed by its path."},
+    {"executeString",  (PyCFunction)s_executeString, METH_VARARGS, "Executes a string passed in."},
     {"send",  (PyCFunction)s_send, METH_VARARGS, "Send a value to the running model."},
     {"receive",  (PyCFunction)s_receive, METH_VARARGS, "Receive a response or information from the running model (blocking)."},
     {nullptr, nullptr, 0, nullptr}
@@ -387,7 +388,13 @@ PyObject* Controller::evaluate(PyObject* args)
     }
     return PyConverter::convertToPyObject(result);
 }
-
+PyObject* Controller::executeString(PyObject* args) 
+{
+    Variant stringPassed = PyConverter::convertToVariant(PyTuple_GetItem(args, 0));
+    Variant result;
+    result = executestring(stringPassed.c_str());
+    return PyConverter::convertToPyObject(result);
+}
 
 PyObject* Controller::send(PyObject* args)
 {
